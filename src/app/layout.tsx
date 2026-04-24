@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "VAE HRM",
-  description: "Mobile-first HRM attendance app",
+  description: "Mobile-first HRM app",
 };
 
 export default function RootLayout({
@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="h-full antialiased">
+    <html lang="vi" className="h-full antialiased" suppressHydrationWarning>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

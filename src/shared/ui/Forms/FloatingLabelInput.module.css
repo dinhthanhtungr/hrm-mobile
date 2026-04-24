@@ -1,0 +1,55 @@
+.wrapper {
+  position: relative;
+  padding-top: 10px;
+}
+
+.input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0 18px;
+  font-size: 1rem;
+  line-height: 52px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--color-brand-500);
+  box-shadow: var(--ring-brand);
+}
+
+.label {
+  position: absolute;
+  left: 18px;
+  top: 36px;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1;
+  pointer-events: none;
+  transition:
+    top 0.2s ease,
+    transform 0.2s ease,
+    font-size 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease,
+    padding 0.2s ease;
+}
+
+.labelActive {
+  top: 10px;
+  transform: translateY(-50%);
+  background: var(--color-surface);
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--color-brand-700);
+}
