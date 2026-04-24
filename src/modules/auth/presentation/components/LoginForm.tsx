@@ -1,7 +1,8 @@
 "use client";
 
+import { AppButton } from "@/shared/ui/Buttons/AppButton";
 import { PrimaryButton } from "@/shared/ui/Buttons/PrimaryButton";
-import { FloatingLabelInput } from "@/shared/ui/Forms/FloatingLabelInput";
+import { FloatingLabelInput } from "@/shared/ui/Forms/Inputs/FloatingLabelInput/FloatingLabelInput";
 
 type LoginFormProps = {
   error: string | null;
@@ -53,9 +54,9 @@ export function LoginForm({
               type="password"
               autoComplete="current-password"
             />
-            <PrimaryButton disabled={isSubmitting} type="submit">
+            <AppButton disabled={isSubmitting} type="submit">
               {isSubmitting ? "Dang dang nhap..." : "Dang nhap"}
-            </PrimaryButton>
+            </AppButton>
           </form>
           {successMessage ? <p className="mt-4 text-sm text-[#1b7a41]">{successMessage}</p> : null}
           {error ? <p className="mt-4 text-sm text-[#c23636]">{error}</p> : null}

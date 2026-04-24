@@ -74,6 +74,27 @@
     rgba(89, 183, 255, 0.18) 45%,
     rgba(255, 255, 255, 0.32) 100%
   );
+
+  /* Alias token cho shadcn: component generate sẽ dùng hệ theme của app thay vì preset mặc định. */
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-brand-700);
+  --primary-foreground: #ffffff;
+  --secondary: var(--color-surface-soft);
+  --secondary-foreground: var(--color-text-strong);
+  --muted: var(--color-surface-soft);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-brand-50);
+  --accent-foreground: var(--color-text-strong);
+  --destructive: var(--color-danger);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-brand-500);
+  --radius: var(--radius-lg);
 }
 
 @theme inline {
@@ -81,4 +102,28 @@
   --color-foreground: var(--color-text);
   --font-sans: Arial, Helvetica, sans-serif;
   --font-mono: "Cascadia Code", Consolas, monospace;
+  --font-heading: Arial, Helvetica, sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-2xl: calc(var(--radius-xl) * 1.25);
+  --radius-3xl: calc(var(--radius-xl) * 1.5);
+  --radius-4xl: calc(var(--radius-xl) * 1.75);
 }
