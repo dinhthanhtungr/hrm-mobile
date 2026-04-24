@@ -45,6 +45,7 @@ export function LoginForm({
               value={username}
               onChange={onUsernameChange}
               autoComplete="username"
+              tone="default"
             />
 
             <FloatingLabelInput
@@ -53,9 +54,10 @@ export function LoginForm({
               onChange={onPasswordChange}
               type="password"
               autoComplete="current-password"
+              tone="default"
             />
             <AppButton disabled={isSubmitting} type="submit">
-              {isSubmitting ? "Dang dang nhap..." : "Dang nhap"}
+              {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
             </AppButton>
           </form>
           {successMessage ? <p className="mt-4 text-sm text-[#1b7a41]">{successMessage}</p> : null}

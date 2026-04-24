@@ -1,0 +1,22 @@
+:root {
+  /* Alias token cho shadcn: component generate se dung he theme cua app thay vi preset mac dinh. */
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-text);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-brand-700);
+  --primary-foreground: #ffffff;
+  --secondary: var(--color-surface-soft);
+  --secondary-foreground: var(--color-text-strong);
+  --muted: var(--color-surface-soft);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-brand-50);
+  --accent-foreground: var(--color-text-strong);
+  --destructive: var(--color-danger);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-brand-500);
+  --radius: var(--radius-lg);
+}

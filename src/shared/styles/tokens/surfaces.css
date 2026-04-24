@@ -1,0 +1,17 @@
+:root {
+  /* Surface */
+  --color-bg: #fdffff;
+  --color-surface: #ffffff;
+  --color-surface-soft: #eef1f5;
+  --color-card-bg: rgba(255, 255, 255, 0.82);
+  --color-card-border: rgba(23, 59, 44, 0.08);
+
+  /* Border and glass */
+  --color-border: #ced4da;
+  --color-border-soft: rgba(0, 0, 0, 0.06);
+  --color-glass-line: rgba(255, 255, 255, 0.35);
+
+  /* Selection */
+  --color-selected-bg: rgba(89, 183, 255, 0.16);
+  --color-selected-accent: #59b7ff;
+}

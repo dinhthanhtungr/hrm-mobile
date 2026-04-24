@@ -3,6 +3,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import styles from "./FloatingLabelInput.module.css";
 
+type FloatingLabelInputTone = "default" | "brand" | "danger";
+
 type FloatingLabelInputProps = {
   label: string;
   value: string;
@@ -10,6 +12,7 @@ type FloatingLabelInputProps = {
   type?: "text" | "password" | "email";
   name?: string;
   autoComplete?: string;
+  tone?: FloatingLabelInputTone;
 };
 
 export function FloatingLabelInput({
@@ -19,6 +22,7 @@ export function FloatingLabelInput({
   type = "text",
   autoComplete,
   name,
+  tone = "default",
 }: FloatingLabelInputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const generated = useId();
@@ -49,7 +53,15 @@ export function FloatingLabelInput({
   const isActive = isFocused || hasValue || hasAutofillValue;
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={`${styles.wrapper} ${
+        tone === "brand"
+          ? styles.brand
+          : tone === "danger"
+            ? styles.danger
+            : styles.default
+      }`}
+    >
       <input
         ref={inputRef}
         id={inputId}

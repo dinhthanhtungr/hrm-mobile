@@ -1,0 +1,30 @@
+:root {
+  /* Text */
+  --color-text: #0b3550;
+  --color-text-muted: #5f737f;
+  --color-text-strong: #003366;
+  --color-muted-text: #6c757d;
+  --color-muted-border-soft: rgba(108, 117, 125, 0.2);
+
+  /* Brand */
+  --color-brand-50: #eaf6ff;
+  --color-brand-200: #bfe3ff;
+  --color-brand-500: #59b7ff;
+  --color-brand-700: #1b6ec2;
+
+  /* Semantic */
+  --color-primary-text: var(--color-brand-700);
+  --color-primary-border-soft: rgba(13, 110, 253, 0.2);
+
+  --color-success: #198754;
+  --color-success-text: var(--color-success);
+  --color-success-border-soft: rgba(25, 135, 84, 0.2);
+
+  --color-warning: #ff9800;
+  --color-warning-text: var(--color-warning);
+  --color-warning-border-soft: rgba(255, 152, 0, 0.2);
+
+  --color-danger: #dc3545;
+  --color-danger-text: var(--color-danger);
+  --color-danger-border-soft: rgba(220, 53, 69, 0.2);
+}

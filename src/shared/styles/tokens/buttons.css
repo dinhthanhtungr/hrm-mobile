@@ -1,0 +1,33 @@
+:root {
+  --color-button-brand-bg: rgba(89, 183, 255, 0.12);
+  --color-button-brand-bg-hover: rgba(89, 183, 255, 0.18);
+  --color-button-brand-border: rgba(27, 110, 194, 0.22);
+  --color-button-brand-border-hover: rgba(27, 110, 194, 0.3);
+  --color-button-brand-text: var(--color-brand-700);
+  --color-button-brand-shadow: 0 4px 10px rgba(27, 110, 194, 0.08);
+  --color-button-brand-shadow-hover: 0 6px 14px rgba(27, 110, 194, 0.1);
+
+  --color-button-outline-bg: rgba(255, 255, 255, 0.82);
+  --color-button-outline-bg-hover: var(--color-brand-50);
+  --color-button-outline-border: rgba(27, 110, 194, 0.2);
+  --color-button-outline-border-hover: rgba(27, 110, 194, 0.3);
+  --color-button-outline-text: var(--color-brand-700);
+
+  --color-button-secondary-bg: rgba(89, 183, 255, 0.14);
+  --color-button-secondary-bg-hover: rgba(89, 183, 255, 0.22);
+  --color-button-secondary-border: transparent;
+  --color-button-secondary-text: var(--color-brand-700);
+
+  --color-button-ghost-bg: transparent;
+  --color-button-ghost-bg-hover: rgba(89, 183, 255, 0.12);
+  --color-button-ghost-border: transparent;
+  --color-button-ghost-text: var(--color-brand-700);
+
+  --color-button-danger-bg: rgba(220, 53, 69, 0.12);
+  --color-button-danger-bg-hover: rgba(220, 53, 69, 0.18);
+  --color-button-danger-border: rgba(220, 53, 69, 0.22);
+  --color-button-danger-border-hover: rgba(220, 53, 69, 0.3);
+  --color-button-danger-text: var(--color-danger);
+  --color-button-danger-shadow: 0 4px 10px rgba(220, 53, 69, 0.08);
+  --color-button-danger-shadow-hover: 0 6px 14px rgba(220, 53, 69, 0.1);
+}
