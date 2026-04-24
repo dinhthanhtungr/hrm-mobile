@@ -1,0 +1,50 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.pageItem {
+  display: flex;
+}
+
+.pageLink {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-brand-700);
+  font-size: 0.875rem;
+  line-height: 34px;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.pageLink:hover {
+  border-color: var(--color-brand-500);
+  background: var(--color-brand-50);
+}
+
+.active .pageLink {
+  background: var(--color-brand-700);
+  color: white;
+  border-color: var(--color-brand-700);
+}
+
+.disabled .pageLink {
+  opacity: 0.5;
+  pointer-events: none;
+  background: #f1f1f1;
+  color: var(--color-text-muted);
+}
