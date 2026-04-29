@@ -6,12 +6,15 @@ import type { LoginResponseApiModel } from "./authApi.types";
 
 export class AuthApiRepository implements AuthRepository {
   async login(input: LoginInput): Promise<AuthSession> {
-    const response = await apiFetch<LoginResponseApiModel>("/api/Account/login", {
+    const response = await apiFetch<LoginResponseApiModel>("/api/v1/auth/login", {
+      auth: false,
       body: JSON.stringify({
+        userNameOrEmail: input.username,
         password: input.password,
-        username: input.username,
+        useCookie: false,
       }),
       method: "POST",
+      retryOnUnauthorized: false,
     });
 
     const session = mapLoginResponse(response);
@@ -22,4 +25,26 @@ export class AuthApiRepository implements AuthRepository {
 
     return session;
   }
+
+
+  async refreshToken(refreshToken: string): Promise<AuthSession> {
+    const response = await apiFetch<LoginResponseApiModel>("/api/v1/auth/refresh-token", {
+      auth: false,
+      body: JSON.stringify({ refreshToken }),
+      method: "POST",
+      retryOnUnauthorized: false,
+    });
+
+    return mapLoginResponse(response);
+  }
+
+
+  async logout(accessToken: string): Promise<void> {
+    await apiFetch("/api/v1/auth/logout", {
+      method: "POST",
+      token: accessToken,
+      retryOnUnauthorized: false,
+    });
+  }
+
 }

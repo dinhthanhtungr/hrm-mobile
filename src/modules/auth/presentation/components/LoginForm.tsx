@@ -1,7 +1,6 @@
 "use client";
 
 import { AppButton } from "@/shared/ui/Buttons/AppButton";
-import { PrimaryButton } from "@/shared/ui/Buttons/PrimaryButton";
 import { FloatingLabelInput } from "@/shared/ui/Forms/Inputs/FloatingLabelInput/FloatingLabelInput";
 
 type LoginFormProps = {

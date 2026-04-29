@@ -38,6 +38,14 @@ export function getAccessToken() {
   return window.localStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
+export function getRefreshToken() {
+  if (!canUseStorage()) {
+    return null;
+  }
+
+  return window.localStorage.getItem(REFRESH_TOKEN_KEY);
+}
+
 export function clearAuthSession() {
   if (!canUseStorage()) {
     return;

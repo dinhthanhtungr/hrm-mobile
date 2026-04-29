@@ -7,4 +7,9 @@ export type LoginInput = {
 
 export interface AuthRepository {
   login(input: LoginInput): Promise<AuthSession>;
+
+  refreshToken(refreshToken: string): Promise<AuthSession>;
+
+  logout(accessToken: string): Promise<void>;
 }
+

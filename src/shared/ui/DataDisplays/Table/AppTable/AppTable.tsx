@@ -65,12 +65,19 @@ export function AppTable<TItem>({
     [columnHelper, columns],
   );
 
+  const getRowId = React.useCallback(
+    (row: TItem) => getRowKey(row),
+    [getRowKey],
+  );
+
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: items,
     columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
-    getRowId: (row) => getRowKey(row),
+    getRowId,
   });
+
 
   return (
     <div className={styles.shell}>

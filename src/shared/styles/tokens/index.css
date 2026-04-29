@@ -9,9 +9,9 @@
 @theme inline {
   --color-background: var(--color-bg);
   --color-foreground: var(--color-text);
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-sans: var(--font-open-sans), Arial, Helvetica, sans-serif;
   --font-mono: "Cascadia Code", Consolas, monospace;
-  --font-heading: Arial, Helvetica, sans-serif;
+  --font-heading: var(--font-open-sans), Arial, Helvetica, sans-serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);

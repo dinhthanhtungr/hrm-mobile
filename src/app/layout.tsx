@@ -26,7 +26,7 @@ const openSans = localFont({
       style: "normal",
     },
   ],
-  variable: "--font-sans",
+  variable: "--font-open-sans",
   display: "swap",
 });
 

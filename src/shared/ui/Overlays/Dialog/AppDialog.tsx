@@ -1,4 +1,4 @@
-import { Dialog } from "../shadcn/dialog";
+import { Dialog } from "../../shadcn/dialog";
 
 type AppDialogProps = React.ComponentProps<typeof Dialog>;
 
