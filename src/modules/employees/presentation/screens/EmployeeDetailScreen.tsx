@@ -3,19 +3,31 @@
 import * as React from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { useBreadcrumbLabel } from "@/shared/ui/Layouts/AppShell/BreadcrumbContext";
 import type { EmployeeProfile } from "../../domain/entities/EmployeeProfile";
 import { EmployeeEditDrawer } from "../components/EmployeeEditDrawer";
 import { EmployeeProfileHeader } from "../components/EmployeeProfileHeader";
 import { EmployeeProfileTabs } from "../components/EmployeeProfileTabs";
 import { EmployeeTabContent } from "../components/EmployeeTabContent";
-import type {
-  EmployeeDetailDrawerKey,
-  EmployeeDetailTabKey,
+import {
+  type EmployeeDetailDrawerKey,
+  type EmployeeDetailTabKey,
 } from "../components/employee-detail.types";
 import styles from "./EmployeeDetailScreen.module.css";
 
-export function EmployeeDetailScreen({ employee }: { employee: EmployeeProfile }) {
-  const [activeTab, setActiveTab] = React.useState<EmployeeDetailTabKey>("overview");
+type EmployeeDetailScreenProps = {
+  breadcrumbSegment: string;
+  employee: EmployeeProfile;
+};
+
+export function EmployeeDetailScreen({
+  breadcrumbSegment,
+  employee,
+}: EmployeeDetailScreenProps) {
+  useBreadcrumbLabel(breadcrumbSegment, employee.name);
+
+  const [activeTab, setActiveTab] =
+    React.useState<EmployeeDetailTabKey>("overview");
   const [activeDrawer, setActiveDrawer] =
     React.useState<EmployeeDetailDrawerKey | null>(null);
 
@@ -28,7 +40,10 @@ export function EmployeeDetailScreen({ employee }: { employee: EmployeeProfile }
 
       <EmployeeProfileHeader employee={employee} />
 
-      <EmployeeProfileTabs activeTab={activeTab} onTabChange={setActiveTab} />
+      <EmployeeProfileTabs
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
 
       <div className={styles.tabPanel}>
         <EmployeeTabContent

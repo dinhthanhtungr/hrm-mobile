@@ -7,6 +7,12 @@ import { Home, Menu } from "lucide-react";
 import { Sidebar } from "../Sidebar/Sidebar";
 import styles from "./AppShell.module.css";
 
+import {
+  BreadcrumbProvider,
+  useBreadcrumbLabels,
+} from "./BreadcrumbContext";
+
+
 type AppShellProps = {
   children: React.ReactNode;
 };
@@ -19,13 +25,30 @@ const routeLabels: Record<string, string> = {
   reports: "Báo cáo",
 };
 
-function formatSegmentLabel(segment: string) {
-  return routeLabels[segment] ?? decodeURIComponent(segment)
-    .replaceAll("-", " ")
-    .replace(/\b\w/g, (character) => character.toUpperCase());
+function formatSegmentLabel(
+  segment: string,
+  breadcrumbLabels: Record<string, string>,
+) {
+  return (
+    breadcrumbLabels[segment] ??
+    routeLabels[segment] ??
+    decodeURIComponent(segment)
+      .replaceAll("-", " ")
+      .replace(/\b\w/g, (character) => character.toUpperCase())
+  );
 }
 
 export function AppShell({ children }: AppShellProps) {
+  return (
+    <BreadcrumbProvider>
+      <AppShellContent>{children}</AppShellContent>
+    </BreadcrumbProvider>
+  );
+}
+
+function AppShellContent({ children }: AppShellProps) {
+  const breadcrumbLabels = useBreadcrumbLabels();
+
   const pathname = usePathname();
   const [isPinnedOpen, setIsPinnedOpen] = React.useState(true);
   const [isPeekOpen, setIsPeekOpen] = React.useState(false);  
@@ -126,9 +149,9 @@ export function AppShell({ children }: AppShellProps) {
                   <li key={href} aria-current={isLast ? "page" : undefined}>
                     <span className={styles.crumbSeparator}>/</span>
                     {isLast ? (
-                      <span>{formatSegmentLabel(segment)}</span>
+                      <span>{formatSegmentLabel(segment, breadcrumbLabels)}</span>
                     ) : (
-                      <Link href={href}>{formatSegmentLabel(segment)}</Link>
+                      <Link href={href}>{formatSegmentLabel(segment, breadcrumbLabels)}</Link>
                     )}
                   </li>
                 );

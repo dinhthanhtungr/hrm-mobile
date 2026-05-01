@@ -3,15 +3,8 @@
   gap: 12px;
 }
 
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
 .tableWrap {
+  position: relative;
   overflow-x: auto;
   border: 1px solid var(--color-border-soft);
   border-radius: var(--radius-xl);
@@ -27,8 +20,9 @@
 }
 
 .head {
-  background: var(--gradient-glass);
+  background: color-mix(in srgb, var(--color-brand-50) 55%, var(--color-surface));
 }
+
 
 .th,
 .td {
@@ -46,7 +40,7 @@
 
 .row {
   background: transparent;
-}
+} 
 
 .clickableRow {
   cursor: pointer;
@@ -61,4 +55,36 @@
   padding: 24px 16px;
   text-align: center;
   color: var(--color-text-muted);
+}
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--color-text-strong);
+  font-weight: 700;
+  backdrop-filter: blur(1px);
+  pointer-events: none;
+}
+
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--color-brand-200);
+  border-top-color: var(--color-brand-700);
+  border-radius: 50%;
+  animation: app-table-spin 0.75s linear infinite;
+}
+
+@keyframes app-table-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

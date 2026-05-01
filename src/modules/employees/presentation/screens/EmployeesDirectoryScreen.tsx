@@ -1,147 +1,246 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-import { ChevronRight, Plus, Search } from "lucide-react";
-import styles from "./EmployeesDirectoryScreen.module.css";
+
+import { Pencil, Trash2 } from "lucide-react";
+import { RowActions } from "@/shared/ui/DataDisplays/RowActions/RowActions";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Plus } from "lucide-react";
+import { AppButton } from "@/shared/ui/Buttons/AppButton";
+import { FilterPopover } from "@/shared/ui/DataDisplays/FilterPopover/FilterPopover";
+import { PaginationBar } from "@/shared/ui/DataDisplays/Pagination/PaginationBar";
+import { SortControl } from "@/shared/ui/DataDisplays/SortControl/SortControl";
+import {
+  AppTable,
+  type AppTableColumn,
+} from "@/shared/ui/DataDisplays/Table/AppTable/AppTable";
+import { AppDropdown } from "@/shared/ui/Forms/Inputs/AppDropdown/AppDropdown";
+import { AppSearchInput } from "@/shared/ui/Forms/Inputs/AppSearchInput/AppSearchInput";
+import type { EmployeePageItem } from "../../domain/entities/EmployeePageItem";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import { useEmployeePage } from "../hooks/useEmployeePage";
-import { AppButton } from "@/shared/ui/Buttons/AppButton";
+import styles from "./EmployeesDirectoryScreen.module.css";
 
 export function EmployeesDirectoryScreen() {
-  const [search, setSearch] = React.useState("");
-  const [status, setStatus] = React.useState("active");
-  const [pageNumber, setPageNumber] = React.useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const debouncedSearch = useDebouncedValue(search, 350);
+  const [sortBy, setSortBy] = React.useState("fullName");
+  const [sortDirection, setSortDirection] = React.useState<"asc" | "desc">(
+    "asc",
+  );
+  const [keyword, setKeyword] = React.useState("");
+  const [status, setStatus] = React.useState("all");
+  const debouncedKeyword = useDebouncedValue(keyword, 350);
+
+  const pageNumber = Number(searchParams.get("page") ?? "1");
+  const safePageNumber =
+    Number.isFinite(pageNumber) && pageNumber > 0 ? pageNumber : 1;
+
   const employeePage = useEmployeePage({
-    pageNumber,
+    pageNumber: safePageNumber,
     pageSize: 10,
-    search: debouncedSearch,
-    status,
+    search: debouncedKeyword,
+    sortBy,
+    sortDirection,
+    status: status === "all" ? undefined : status,
   });
 
-  const currentPage = employeePage.data?.pageNumber ?? pageNumber;
+  const currentPage = employeePage.data?.pageNumber ?? safePageNumber;
   const totalPages = employeePage.data?.totalPages ?? 1;
-  const canGoPrevious = employeePage.data?.hasPreviousPage ?? pageNumber > 1;
+  const canGoPrevious = employeePage.data?.hasPreviousPage ?? safePageNumber > 1;
   const canGoNext = employeePage.data?.hasNextPage ?? false;
+  const employees = employeePage.data?.items ?? [];
+
+  const columns = React.useMemo<AppTableColumn<EmployeePageItem>[]>(
+    () => [
+      {
+        key: "employee",
+        header: "Nhân viên",
+        render: (employee) => (
+          <span className={styles.employeeCell}>
+            <span className={styles.rowAvatar}>
+              {employee.fullName.slice(0, 2).toUpperCase()}
+            </span>
+
+            <span>
+              <strong>{employee.fullName}</strong>
+              <small>{employee.externalId}</small>
+            </span>
+          </span>
+        ),
+      },
+      {
+        key: "part",
+        header: "Phòng ban",
+        render: (employee) => employee.partName,
+      },
+      {
+        key: "position",
+        header: "Chức vụ",
+        render: (employee) => employee.positionName,
+      },
+      {
+        key: "status",
+        header: "Trạng thái",
+        render: (employee) => (
+          <span
+            className={
+              employee.isActive ? styles.activeBadge : styles.inactiveBadge
+            }
+          >
+            {employee.isActive ? "Đang làm việc" : "Tạm nghỉ"}
+          </span>
+        ),
+      },
+      {
+        key: "actions",
+        header: "",
+        align: "right",
+        width: "60px",
+        render: (employee) => (
+          <RowActions
+            actions={[
+              {
+                key: "edit",
+                label: "Chỉnh sửa",
+                icon: <Pencil size={16} />,
+                onSelect: () => {
+                  router.push(`/employees/${employee.employeeId}`);
+                },
+              },
+              {
+                key: "remove",
+                label: "Xóa",
+                icon: <Trash2 size={16} />,
+                danger: true,
+                onSelect: () => {
+                  console.log("remove", employee.employeeId);
+                },
+              },
+            ]}
+          />
+        ),
+      }
+    ],
+    [router],
+  );
+
+  function changePage(nextPage: number) {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (nextPage <= 1) {
+      params.delete("page");
+    } else {
+      params.set("page", String(nextPage));
+    }
+
+    const queryString = params.toString();
+    router.push(queryString ? `${pathname}?${queryString}` : pathname);
+  }
+
+  function resetPageAfterControlChange() {
+    if (safePageNumber !== 1) {
+      changePage(1);
+    }
+  }
 
   return (
     <div className={styles.page}>
       <div className={styles.pageHeader}>
-        <div>
-          <h1>Quản lý nhân viên</h1>
+        <div className={styles.titleGroup}>
+          <h1>Quản lý nhân sự</h1>
+
+          <SortControl
+            value={sortBy}
+            direction={sortDirection}
+            options={[
+              { label: "Tên nhân viên", value: "fullName" },
+              { label: "Mã nhân viên", value: "externalId" },
+              { label: "Phòng ban", value: "partName" },
+            ]}
+            onChange={(nextSortBy) => {
+              setSortBy(nextSortBy);
+              resetPageAfterControlChange();
+            }}
+            onDirectionChange={(nextDirection) => {
+              setSortDirection(nextDirection);
+              resetPageAfterControlChange();
+            }}
+          />
         </div>
 
-        <AppButton type="button">
-          <Plus size={16} />
-          Thêm nhân viên
-        </AppButton>
-      </div>
-
-      <section className={styles.directoryPanel}>
-        <div className={styles.filters}>
-          <label className={styles.searchBox}>
-            <Search size={16} />
-            <input
-              placeholder="Tìm theo tên, mã nhân viên, email..."
-              value={search}
-              onChange={(event) => {
-                setSearch(event.target.value);
-                setPageNumber(1);
-              }}
-            />
-          </label>
-
-          <select defaultValue="all">
-            <option value="all">Tất cả phòng ban</option>
-            <option value="hr">Human Capital</option>
-            <option value="lab">Lab</option>
-            <option value="manufacture">Manufacture</option>
-          </select>
-
-          <select
-            value={status}
+        <div className={styles.headerActions}>
+          <AppSearchInput
+            className={styles.employeeSearch}
+            value={keyword}
             onChange={(event) => {
-              setStatus(event.target.value);
-              setPageNumber(1);
+              setKeyword(event.target.value);
+              resetPageAfterControlChange();
+            }}
+            onClear={() => {
+              setKeyword("");
+              resetPageAfterControlChange();
+            }}
+            placeholder="Tìm tên, mã nhân viên..."
+          />
+
+          <FilterPopover
+            activeCount={status !== "all" ? 1 : 0}
+            onClear={() => {
+              setStatus("all");
+              resetPageAfterControlChange();
             }}
           >
-            <option value="active">Đang làm việc</option>
-            <option value="inactive">Tạm nghỉ</option>
-            <option value="all">Tất cả trạng thái</option>
-          </select>
+            {({ close }) => (
+              <div className={styles.filterContent}>
+                <AppDropdown
+                  label="Trạng thái"
+                  value={status}
+                  options={[
+                    { label: "Tất cả", value: "all" },
+                    { label: "Đang làm việc", value: "active" },
+                    { label: "Tạm nghỉ", value: "inactive" },
+                  ]}
+                  onChange={(nextValue) => {
+                    if (typeof nextValue === "string") {
+                      setStatus(nextValue);
+                      resetPageAfterControlChange();
+                      close();
+                    }
+                  }}
+                />
+              </div>
+            )}
+          </FilterPopover>
+
+          <AppButton type="button">
+            <Plus size={16} />
+            Thêm nhân viên
+          </AppButton>
         </div>
+      </div>
 
-        {employeePage.isLoading ? (
-          <p className={styles.statusText}>Đang tải danh sách nhân viên...</p>
-        ) : null}
+      {employeePage.error ? (
+        <p className={styles.errorText}>{employeePage.error}</p>
+      ) : null}
 
-        {employeePage.error ? (
-          <p className={styles.errorText}>{employeePage.error}</p>
-        ) : null}
+      <AppTable
+        items={employees}
+        columns={columns}
+        getRowKey={(employee) => employee.employeeId}
+        isLoading={employeePage.isLoading}
+        emptyState="Không có nhân viên."
+      />
 
-        <div className={styles.tableHeader} aria-hidden="true">
-          <span />
-          <span>Nhân viên</span>
-          <span>Phòng ban</span>
-          <span>Chức vụ</span>
-          <span>Trạng thái</span>
-          <span />
-        </div>
-
-        <div className={styles.employeeTable} aria-label="Danh sách nhân viên">
-          {employeePage.data?.items.map((employee) => (
-            <Link
-              key={employee.employeeId}
-              href={`/employees/${employee.employeeId}`}
-              className={styles.employeeRow}
-            >
-              <span className={styles.rowAvatar}>
-                {employee.fullName.slice(0, 2).toUpperCase()}
-              </span>
-
-              <span>
-                <strong>{employee.fullName}</strong>
-                <small>{employee.externalId}</small>
-              </span>
-
-              <span>{employee.partName}</span>
-              <span>{employee.positionName}</span>
-              <span
-                className={
-                  employee.isActive ? styles.activeBadge : styles.inactiveBadge
-                }
-              >
-                {employee.isActive ? "Đang làm việc" : "Tạm nghỉ"}
-              </span>
-              <ChevronRight size={16} />
-            </Link>
-          ))}
-        </div>
-
-        <div className={styles.paginationBar}>
-          <button
-            type="button"
-            disabled={!canGoPrevious}
-            onClick={() => setPageNumber((page) => Math.max(1, page - 1))}
-          >
-            Trước
-          </button>
-
-          <span>
-            Trang {currentPage} / {totalPages}
-          </span>
-
-          <button
-            type="button"
-            disabled={!canGoNext}
-            onClick={() => setPageNumber((page) => page + 1)}
-          >
-            Sau
-          </button>
-        </div>
-      </section>
+      <PaginationBar
+        pageNumber={currentPage}
+        totalPages={totalPages}
+        hasPreviousPage={canGoPrevious}
+        hasNextPage={canGoNext}
+        onPageChange={changePage}
+      />
     </div>
   );
 }

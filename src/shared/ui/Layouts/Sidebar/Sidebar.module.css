@@ -6,7 +6,8 @@
   min-height: 100vh;
   padding: 14px;
   border-right: 1px solid var(--color-border-soft);
-  background: var(--color-surface);
+  background: color-mix(in srgb, var(--color-surface) 96%, var(--color-brand-50));
+  box-shadow: 8px 0 24px rgba(11, 53, 80, 0.04);
   display: grid;
   align-content: start;
   gap: 18px;

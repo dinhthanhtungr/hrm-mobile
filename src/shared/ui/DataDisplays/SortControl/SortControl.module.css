@@ -1,0 +1,31 @@
+.sortControl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.directionButton {
+  min-height: 34px;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.directionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 10px;
+  cursor: pointer;
+}
+
+.directionButton:hover {
+  background: var(--color-selected-bg);
+}

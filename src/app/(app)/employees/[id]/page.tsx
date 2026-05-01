@@ -1,7 +1,6 @@
-import { notFound } from "next/navigation";
 import {
+  createMockEmployeeProfile,
   EmployeeDetailScreen,
-  employees,
   findEmployeeById,
 } from "@/modules/employees";
 
@@ -11,19 +10,9 @@ type EmployeeDetailPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return employees.map((employee) => ({
-    id: employee.id,
-  }));
-}
-
 export default async function EmployeeDetailPage({ params }: EmployeeDetailPageProps) {
   const { id } = await params;
-  const employee = findEmployeeById(id);
+  const employee = findEmployeeById(id) ?? createMockEmployeeProfile(id);
 
-  if (!employee) {
-    notFound();
-  }
-
-  return <EmployeeDetailScreen employee={employee} />;
+  return <EmployeeDetailScreen breadcrumbSegment={id} employee={employee} />;
 }

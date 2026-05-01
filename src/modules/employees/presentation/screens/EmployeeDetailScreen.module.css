@@ -16,15 +16,17 @@
 }
 
 .profileHeader {
+  position: relative;
+  overflow: hidden;
   padding: 18px;
-  border: 1px solid var(--color-border-soft);
+  border: 1px solid color-mix(in srgb, var(--color-border) 46%, transparent);
   border-radius: var(--radius-lg);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 16px;
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 10px 28px rgb(15 23 42 / 0.08);
 }
 
 .avatar {
@@ -37,6 +39,7 @@
   color: var(--color-brand-700);
   font-size: 1.1rem;
   font-weight: 700;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-brand-700) 8%, transparent);
 }
 
 .identity {
@@ -82,26 +85,47 @@
 }
 
 .tabs {
+  position: sticky;
+  top: 56px;
+  z-index: 8;
   display: flex;
-  flex-wrap: wrap;
   gap: 6px;
-  border-bottom: 1px solid var(--color-border-soft);
+  padding: 8px;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
 }
 
 .tabs button {
-  min-height: 40px;
-  padding-inline: 12px;
-  border: 0;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid transparent;
   border-bottom: 2px solid transparent;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   background: transparent;
   color: var(--color-text-muted);
   cursor: pointer;
   font-weight: 700;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.tabs button:hover {
+  border-color: var(--color-primary-border-soft);
+  border-bottom-color: var(--color-brand-700);
+  color: var(--color-text-strong);
+  background: var(--color-selected-bg);
 }
 
 .tabs button[data-active="true"] {
+  border-color: color-mix(in srgb, var(--color-brand-700) 28%, transparent);
   border-bottom-color: var(--color-brand-700);
   color: var(--color-text-strong);
+  background: var(--color-selected-bg);
 }
 
 .tabPanel {
@@ -116,10 +140,21 @@
 }
 
 .card {
-  padding: 16px;
-  border: 1px solid var(--color-border-soft);
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--color-border) 46%, transparent);
   border-radius: var(--radius-lg);
-  background: var(--color-card-bg);
+  background: var(--color-surface);
+  box-shadow: 0 10px 28px rgb(15 23 42 / 0.08);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: color-mix(in srgb, var(--color-brand-700) 72%, var(--color-surface));
 }
 
 .cardHeader {
@@ -132,26 +167,44 @@
 .cardTitle {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  color: var(--color-brand-700);
+}
+
+.cardTitle > svg {
+  width: 34px;
+  height: 34px;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-brand-50);
   color: var(--color-brand-700);
 }
 
 .cardTitle h2 {
   margin: 0;
   color: var(--color-text-strong);
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .infoList {
   display: grid;
-  gap: 10px;
-  margin: 14px 0 0;
+  margin: 16px 0 0;
+  border-top: 1px solid var(--color-border-soft);
 }
 
 .infoRow {
   display: grid;
   grid-template-columns: minmax(110px, 0.8fr) minmax(0, 1.2fr);
   gap: 12px;
+  min-height: 40px;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--color-border-soft);
+  align-items: center;
+}
+
+.infoRow:last-child {
+  border-bottom: 0;
 }
 
 .infoRow dt,
@@ -163,7 +216,7 @@
 .infoRow dd {
   margin: 0;
   color: var(--color-text-strong);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .contactList,
@@ -206,7 +259,8 @@
 }
 
 .tag {
-  background: var(--color-selected-bg);
+  border: 1px solid var(--color-primary-border-soft);
+  background: color-mix(in srgb, var(--color-brand-50) 82%, var(--color-surface));
   color: var(--color-brand-700);
 }
 
@@ -218,6 +272,7 @@
 .table {
   display: grid;
   margin-top: 14px;
+  border-top: 1px solid var(--color-border-soft);
 }
 
 .tableRow {
@@ -225,8 +280,12 @@
   grid-template-columns: minmax(0, 1.4fr) minmax(120px, 0.8fr) 120px;
   gap: 12px;
   padding-block: 12px;
-  border-top: 1px solid var(--color-border-soft);
+  border-bottom: 1px solid var(--color-border-soft);
   align-items: center;
+}
+
+.tableRow:last-child {
+  border-bottom: 0;
 }
 
 .tableRow strong {
@@ -319,16 +378,18 @@
   z-index: 60;
   display: flex;
   justify-content: flex-end;
+  align-items: flex-start;
+  overflow-y: auto;
   background: rgb(0 0 0 / 18%);
 }
 
 .drawer {
-  width: min(100%, 440px);
-  min-height: 100vh;
-  padding: 18px;
+  width: min(100vw, clamp(360px, 46vw, 620px));
+  min-height: 100dvh;
+  padding: clamp(14px, 1.6vw, 18px);
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 18px;
+  align-content: start;
+  gap: 14px;
   background: var(--color-surface);
   box-shadow: var(--shadow-lg);
 }
@@ -347,15 +408,24 @@
   line-height: 1.15;
 }
 
+.drawerFooter {
+  margin-inline: calc(clamp(14px, 1.6vw, 18px) * -1);
+  margin-bottom: calc(clamp(14px, 1.6vw, 18px) * -1);
+  padding: 14px clamp(14px, 1.6vw, 18px);
+  border-top: 1px solid var(--color-border-soft);
+  background: var(--color-surface);
+}
+
 .drawerForm {
   display: grid;
   align-content: start;
-  gap: 14px;
+  gap: 16px;
+  padding: 2px 4px 12px 0;
 }
 
 .drawerForm label {
   display: grid;
-  gap: 6px;
+  gap: 8px;
   color: var(--color-text-muted);
   font-size: 0.84rem;
   font-weight: 700;
@@ -364,18 +434,64 @@
 .drawerForm input,
 .drawerForm select,
 .drawerForm textarea {
-  min-height: 38px;
-  padding-inline: 10px;
-  border: 1px solid var(--color-border-soft);
+  min-height: 44px;
+  padding-inline: 12px;
+  border: 1px solid color-mix(in srgb, var(--color-border) 54%, transparent);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
-  color: var(--color-text);
+  color: var(--color-text-strong);
+  font-weight: 700;
+  box-shadow: 0 1px 0 rgb(15 23 42 / 0.03);
 }
 
 .drawerForm textarea {
   min-height: 96px;
   padding-block: 10px;
   resize: vertical;
+}
+
+.drawerSection {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(14px, 1.6vw, 18px);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: 0 8px 20px rgb(15 23 42 / 0.06);
+}
+
+.drawerSectionHeader {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.drawerSectionHeader h3 {
+  margin: 0;
+  color: var(--color-text-strong);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.drawerSectionHeader p {
+  margin: 4px 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.drawerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: clamp(10px, 1.2vw, 12px);
+}
+
+.drawerField {
+  min-width: 0;
+}
+
+.fullSpan {
+  grid-column: 1 / -1;
 }
 
 .checkRow {
@@ -405,6 +521,10 @@
 @media (max-width: 640px) {
   .infoRow,
   .tableRow {
+    grid-template-columns: 1fr;
+  }
+
+  .drawerGrid {
     grid-template-columns: 1fr;
   }
 }

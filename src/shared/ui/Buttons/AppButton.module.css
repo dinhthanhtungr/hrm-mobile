@@ -46,16 +46,16 @@
 }
 
 .default {
-  border-color: rgba(27, 110, 194, 0.22);
-  background: rgba(89, 183, 255, 0.12);
-  color: var(--color-brand-700);
-  box-shadow: 0 4px 10px rgba(27, 110, 194, 0.08);
+  border-color: var(--color-button-brand-border);
+  background: var(--color-button-brand-bg);
+  color: var(--color-button-brand-text);
+  box-shadow: var(--color-button-brand-shadow);
 }
 
 .default:hover {
-  background: rgba(89, 183, 255, 0.18);
-  border-color: rgba(27, 110, 194, 0.3);
-  box-shadow: 0 6px 14px rgba(27, 110, 194, 0.1);
+  border-color: var(--color-button-brand-border-hover);
+  background: var(--color-button-brand-bg-hover);
+  box-shadow: var(--color-button-brand-shadow-hover);
 }
 
 

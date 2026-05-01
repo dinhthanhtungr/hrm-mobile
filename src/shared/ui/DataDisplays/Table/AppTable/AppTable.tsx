@@ -15,6 +15,7 @@ export type AppTableColumn<TItem> = {
   header: React.ReactNode;
   width?: string;
   align?: "left" | "center" | "right";
+  hideBelow?: "sm" | "md" | "lg";
   render: (item: TItem) => React.ReactNode;
 };
 
@@ -23,16 +24,17 @@ export type AppTableProps<TItem> = {
   columns: AppTableColumn<TItem>[];
   getRowKey: (item: TItem) => string;
   emptyState?: React.ReactNode;
-  toolbar?: React.ReactNode;
+  isLoading?: boolean;
   onRowClick?: (item: TItem) => void;
 };
+
 
 export function AppTable<TItem>({
   items,
   columns,
   getRowKey,
   emptyState,
-  toolbar,
+  isLoading = false,
   onRowClick,
 }: AppTableProps<TItem>) {
   const columnHelper = createColumnHelper<TItem>();
@@ -81,8 +83,6 @@ export function AppTable<TItem>({
 
   return (
     <div className={styles.shell}>
-      {toolbar ? <div className={styles.toolbar}>{toolbar}</div> : null}
-
       <div className={styles.tableWrap}>
         <table className={styles.table}>
           <thead className={styles.head}>
@@ -119,10 +119,16 @@ export function AppTable<TItem>({
           </thead>
 
           <tbody>
-            {table.getRowModel().rows.length === 0 ? (
+            {isLoading && table.getRowModel().rows.length === 0 ? (
               <tr>
                 <td className={styles.empty} colSpan={columns.length}>
-                  {emptyState ?? "Khong co du lieu."}
+                  Đang tải dữ liệu...
+                </td>
+              </tr>
+            ) : table.getRowModel().rows.length === 0 ? (
+              <tr>
+                <td className={styles.empty} colSpan={columns.length}>
+                  {emptyState ?? "Không có dữ liệu."}
                 </td>
               </tr>
             ) : (
@@ -142,6 +148,13 @@ export function AppTable<TItem>({
             )}
           </tbody>
         </table>
+
+        {isLoading && table.getRowModel().rows.length > 0 ? (
+          <div className={styles.loadingOverlay} aria-live="polite">
+            <span className={styles.spinner} />
+            <span>Đang tải dữ liệu...</span>
+          </div>
+        ) : null}
       </div>
     </div>
   );

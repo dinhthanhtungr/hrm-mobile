@@ -1,0 +1,62 @@
+.root {
+  position: relative;
+  display: inline-flex;
+}
+
+.button {
+  min-height: 38px;
+  padding-inline: 12px;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.button:hover {
+  background: var(--color-selected-bg);
+}
+
+.count {
+  min-width: 20px;
+  height: 20px;
+  padding-inline: 6px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-brand-700);
+  color: var(--color-surface);
+  font-size: 0.75rem;
+}
+
+.clearButton {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  display: inline-grid;
+  place-items: center;
+  color: var(--color-text-muted);
+}
+
+.clearButton:hover {
+  background: var(--color-brand-50);
+  color: var(--color-text-strong);
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  width: min(360px, calc(100vw - 32px));
+  padding: 14px;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}

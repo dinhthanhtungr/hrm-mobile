@@ -26,20 +26,46 @@
 
 
 .pageHeader {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
   gap: 16px;
   padding: 4px 2px 10px;
   border-bottom: 1px solid var(--color-border-soft);
 }
 
+.titleGroup {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 18px;
+}
+
 .pageHeader h1 {
   margin: 2px 0 0;
   color: var(--color-text-strong);
-  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-size: clamp(1.45rem, 1.8vw, 1.85rem);
   font-weight: 700;
   line-height: 1.15;
+}
+
+.headerActions {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.employeeSearch {
+  width: clamp(180px, 24vw, 360px);
+}
+
+.filterContent {
+  display: grid;
+  gap: 12px;
 }
 
 .pageHeader p {
@@ -136,6 +162,22 @@
 }
 
 .employeeRow small {
+  color: var(--color-text-muted);
+}
+
+.employeeCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.employeeCell strong {
+  display: block;
+  color: var(--color-text-strong);
+}
+
+.employeeCell small {
+  display: block;
   color: var(--color-text-muted);
 }
 
@@ -351,9 +393,25 @@
 
 
 @media (max-width: 640px) {
-  .pageHeader,
+  .pageHeader {
+    grid-template-columns: 1fr;
+  }
+
   .cardHeader {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .headerActions,
+  .titleGroup {
+    width: 100%;
+  }
+
+  .headerActions {
+    justify-content: flex-start;
+  }
+
+  .employeeSearch {
+    width: 100%;
   }
 }

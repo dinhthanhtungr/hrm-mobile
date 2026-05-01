@@ -3,6 +3,7 @@ export type EmployeeDetailTabKey =
   | "personal"
   | "job"
   | "organization"
+  | "contracts"
   | "account"
   | "payroll"
   | "documents"
@@ -21,8 +22,9 @@ export const employeeDetailTabs: {
   { key: "personal", label: "Cá nhân" },
   { key: "job", label: "Công việc" },
   { key: "organization", label: "Tổ chức" },
-  { key: "account", label: "Quyền" },
-  { key: "payroll", label: "Lương" },
+  { key: "contracts", label: "Hợp đồng" },
+  { key: "account", label: "Tài khoản" },
+  { key: "payroll", label: "Lương & BH" },
   { key: "documents", label: "Tài liệu" },
   { key: "history", label: "Lịch sử" },
 ];
@@ -31,7 +33,8 @@ export const employeeDrawerTitles: Record<EmployeeDetailDrawerKey, string> = {
   personal: "Chỉnh sửa thông tin cá nhân",
   job: "Cập nhật công việc",
   organization: "Cập nhật tổ chức",
+  contracts: "Quản lý hợp đồng",
   account: "Quản lý tài khoản & quyền",
-  payroll: "Cập nhật lương & đãi ngộ",
+  payroll: "Cập nhật ngân hàng & bảo hiểm",
   documents: "Quản lý tài liệu",
 };
